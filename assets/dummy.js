@@ -118,8 +118,7 @@ const ticketsData = [
         price: 'Free',
       },
     ],
-  }
+  },
 ];
-
 
 export { ticketsData };

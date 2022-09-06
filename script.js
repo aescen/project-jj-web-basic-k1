@@ -1,5 +1,6 @@
 import * as Utils from './common.js'; // api get: tickets
-import { ticketsData } from './assets/dummy.js'; // api get: tickets
+import { ticketsData } from './assets/dummy.js';
+// api get: tickets
 localStorage.setItem('db_tickets', JSON.stringify(ticketsData));
 localStorage.setItem('db_bookings', '[]');
 // is login test
@@ -84,10 +85,8 @@ const get = () => {
   console.log(dataJSON);
 };
 
-const logout = Utils.logout;
-//// akun
+const { logout } = Utils;
+/// / akun
 const akun = () => {
   window.location.replace('./akun/');
 };
-
-

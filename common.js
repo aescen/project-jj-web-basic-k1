@@ -17,7 +17,7 @@ const params = {
 
 const toIDR = ($int) => $int.toLocaleString('id-ID', {
   style: 'currency',
-  currency: 'IDR'
+  currency: 'IDR',
 });
 
 const lazyLoad = (href, callback) => {
@@ -50,9 +50,7 @@ const jsonSave = ($key, $jsonData) => {
   localStorage.setItem($key, JSON.stringify($jsonData));
 };
 
-const jsonLoad = ($key) => {
-  return JSON.parse(localStorage.getItem($key));
-};
+const jsonLoad = ($key) => JSON.parse(localStorage.getItem($key));
 
 const checkLogin = () => {
   const isLogin = localStorage.getItem('isLogin');
@@ -93,11 +91,11 @@ const getNavBar = (document) => {
     navBarEl.querySelector('#brandLogo').src = `${window.location.origin}/assets/brand_logo.png`;
     const loggedEl = [
       navBarEl.querySelector('#navMasuk'),
-      navBarEl.querySelector('#navDaftar')
+      navBarEl.querySelector('#navDaftar'),
     ];
     const notLogged = [
       navBarEl.querySelector('#navKeluar'),
-      navBarEl.querySelector('#navProfil')
+      navBarEl.querySelector('#navProfil'),
     ];
 
     const isLogin = checkLogin();
@@ -117,7 +115,7 @@ const getNavBar = (document) => {
   };
 
   lazyLoad(`${window.location.origin}/components/NavBar.html`, setNavBar);
-}
+};
 
 const getFooter = (document) => {
   const setFooter = (html) => {

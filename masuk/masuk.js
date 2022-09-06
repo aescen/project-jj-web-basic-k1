@@ -2,28 +2,28 @@ import * as Utils from '../common.js';
 
 const setMasuk = (html) => {
   const sandi = () => {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
+    const x = document.getElementById('password');
+    if (x.type === 'password') {
+      x.type = 'text';
     } else {
-      x.type = "password";
+      x.type = 'password';
     }
   };
 
   const masuk = (el) => {
-    const emailInput = el.querySelector("#email").value;
-    const passwordInput = el.querySelector("#password").value;
+    const emailInput = el.querySelector('#email').value;
+    const passwordInput = el.querySelector('#password').value;
 
-    const dataLocal = localStorage.getItem("data");
+    const dataLocal = localStorage.getItem('data');
     const dataParse = JSON.parse(dataLocal);
 
     if (emailInput === dataParse.email && passwordInput === dataParse.password) {
-      localStorage.setItem('isLogin', false);
-      window.location.replace("../");
+      localStorage.setItem('isLogin', true);
+      window.location.replace('../');
     } else {
-      alert("email atau password ada yang salah");
-      el.querySelector("#email").value = "";
-      el.querySelector("#password").value = "";
+      alert('email atau password ada yang salah');
+      el.querySelector('#email').value = '';
+      el.querySelector('#password').value = '';
     }
   };
 

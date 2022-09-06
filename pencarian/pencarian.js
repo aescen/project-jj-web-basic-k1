@@ -12,10 +12,10 @@ const getTicket = (ticketId) => {
 
 // bend: get price
 const getPriceTotal = (passengers, prices) => {
-  let total = 0
+  let total = 0;
   for (const pass in passengers) {
     for (const price of prices) {
-      if (pass === price.name) total = total + (passengers[pass] * price.price);
+      if (pass === price.name) total += (passengers[pass] * price.price);
     }
   }
 
@@ -107,7 +107,7 @@ const createBooking = (userId, ticketId, passengers) => {
   // bend: db save
   const dbBookings = Utils.jsonLoad('db_bookings');
 
-  Utils.jsonSave('db_bookings', [...dbBookings, booking])
+  Utils.jsonSave('db_bookings', [...dbBookings, booking]);
 
   return booking.id;
 };
@@ -180,7 +180,7 @@ const loadItemHasil = (ticketData) => {
 Utils.getNavBar(document);
 
 /* api get: traveler data */
-const { tickets, travelerData } = getTickets(Utils.params.travelerDataNames)
+const { tickets, travelerData } = getTickets(Utils.params.travelerDataNames);
 // local: current traveler data
 Utils.jsonSave('currentTravelerData', travelerData);
 if (travelerData !== null) {
@@ -192,7 +192,6 @@ if (travelerData !== null) {
 
   // load hasil items
   tickets.forEach((item) => loadItemHasil(item));
-
 } else {
   alert('Data error!');
 }
