@@ -11,7 +11,13 @@ const symbols = {
 
 const params = {
   travelerDataNames: [
-    'from', 'dest', 'depart', 'adult', 'child', 'infant', 'seat',
+    'from',
+    'dest',
+    'depart',
+    'adult',
+    'child',
+    'infant',
+    'seat',
   ],
 };
 
@@ -20,7 +26,7 @@ const toIDR = ($int) => $int.toLocaleString('id-ID', {
   currency: 'IDR',
 });
 
-const lazyLoad = (href, callback) => {
+const lazyLoad = (href, callback = () => {}) => {
   fetch(href)
     .then((res) => res.text())
     .then((html) => callback(html))
@@ -54,7 +60,7 @@ const jsonLoad = ($key) => JSON.parse(localStorage.getItem($key));
 
 const checkLogin = () => {
   const isLogin = localStorage.getItem('isLogin');
-  return (isLogin === 'true');
+  return isLogin === 'true';
 };
 
 const hideEl = (el) => {
@@ -88,7 +94,9 @@ const getNavBar = (document) => {
     const navBarEl = document.createElement('div');
 
     navBarEl.insertAdjacentHTML('beforeEnd', html);
-    navBarEl.querySelector('#brandLogo').src = `${window.location.origin}/assets/brand_logo.png`;
+    navBarEl.querySelector(
+      '#brandLogo',
+    ).src = `${window.location.origin}/assets/brand_logo.png`;
     const loggedEl = [
       navBarEl.querySelector('#navMasuk'),
       navBarEl.querySelector('#navDaftar'),
@@ -108,10 +116,14 @@ const getNavBar = (document) => {
       loggedEl.forEach((item) => showEl(item));
       notLogged.forEach((item) => hideEl(item));
       navBarEl.querySelector('#navBtnLogin').addEventListener('click', login);
-      navBarEl.querySelector('#navBtnDaftar').addEventListener('click', pendaftaran);
+      navBarEl
+        .querySelector('#navBtnDaftar')
+        .addEventListener('click', pendaftaran);
     }
     document.querySelector('#navbar').innerHTML = '';
-    document.querySelector('#navbar').insertAdjacentElement('beforeEnd', navBarEl);
+    document
+      .querySelector('#navbar')
+      .insertAdjacentElement('beforeEnd', navBarEl);
   };
 
   lazyLoad(`${window.location.origin}/components/NavBar.html`, setNavBar);

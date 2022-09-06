@@ -5,7 +5,7 @@ import * as Utils from '../common.js';
 // bend: get ticket
 const getTicket = (ticketId) => {
   const tickets = Utils.jsonLoad('db_tickets');
-  const ticket = tickets.filter((ticket) => ticket.id === ticketId);
+  const ticket = tickets.filter((item) => item.id === ticketId);
   if (ticket.length !== 0) return ticket[0];
   return null;
 };
@@ -15,7 +15,7 @@ const getPriceTotal = (passengers, prices) => {
   let total = 0;
   for (const pass in passengers) {
     for (const price of prices) {
-      if (pass === price.name) total += (passengers[pass] * price.price);
+      if (pass === price.name) total += passengers[pass] * price.price;
     }
   }
 
@@ -47,10 +47,11 @@ const getTickets = (args) => {
 
     /* bend: tickets from db */
     const tickets = Utils.jsonLoad('db_tickets');
-    const filteredTickets = tickets.filter((ticket) => (
-      ticket.fromNameCode === fromNameCode
-      && ticket.destNameCode === destNameCode));
-    console.log(filteredTickets);
+    const filteredTickets = tickets.filter(
+      (item) => item.fromNameCode === fromNameCode
+        && item.destNameCode === destNameCode,
+    );
+
     return {
       tickets: filteredTickets,
       travelerData: {
@@ -123,7 +124,9 @@ const loadItemPencarian = (data) => {
       ${Utils.symbols.RIGHT_ARROW}
       ${Utils.cityCodes[data.destNameCode]} (${data.destNameCode})`;
     hasilEl.querySelector('#infoPencarian').textContent = `
-      ${data.depart} | ${Utils.getPassengers(data.passengers)} | ${data.seatClass}`;
+      ${data.depart} | ${Utils.getPassengers(data.passengers)} | ${
+  data.seatClass
+}`;
 
     document.querySelector('#pencarian').appendChild(hasilEl);
   };
@@ -149,13 +152,19 @@ const loadItemHasil = (ticketData) => {
     hasilEl.querySelector('#transferCount').textContent = ticketData.transferCount;
     hasilEl.querySelector('#destTime').textContent = ticketData.destTime;
     hasilEl.querySelector('#destCode').textContent = ticketData.destCode;
-    hasilEl.querySelector('#pricePerTix').textContent = Utils.toIDR(ticketData.pricePerTix);
+    hasilEl.querySelector('#pricePerTix').textContent = Utils.toIDR(
+      ticketData.pricePerTix,
+    );
 
     const btId = `selectTix_${ticketData.id}`;
     hasilEl.querySelector('#selectTix').addEventListener('click', () => {
       const userId = localStorage.getItem('currentUserId');
       /* api post: booking return booking id */
-      const bookingId = createBooking(userId, ticketData.id, travelerData.passengers);
+      const bookingId = createBooking(
+        userId,
+        ticketData.id,
+        travelerData.passengers,
+      );
       localStorage.setItem('currentBookingId', bookingId);
       /* with history (logged in) */
       // const bookingHistoryId = localStorage.getItem('bookingHistoryIds');
@@ -175,6 +184,10 @@ const loadItemHasil = (ticketData) => {
   Utils.lazyLoad('../components/pencarian/Hasil.html', setHasil);
 };
 
+const setNoResult = (html) => {
+  document.querySelector('#saring').insertAdjacentHTML('beforeEnd', html);
+};
+
 /* load components */
 // load navbar
 Utils.getNavBar(document);
@@ -183,17 +196,22 @@ Utils.getNavBar(document);
 const { tickets, travelerData } = getTickets(Utils.params.travelerDataNames);
 // local: current traveler data
 Utils.jsonSave('currentTravelerData', travelerData);
-if (travelerData !== null) {
-  // load pencarian
-  loadItemPencarian(travelerData);
+if (tickets.length !== 0) {
+  if (travelerData) {
+    // load pencarian
+    loadItemPencarian(travelerData);
 
-  // load saring
-  Utils.lazyLoad('../components/pencarian/Saring.html', setSaring);
+    // load saring
+    Utils.lazyLoad('../components/pencarian/Saring.html', setSaring);
 
-  // load hasil items
-  tickets.forEach((item) => loadItemHasil(item));
+    // load hasil items
+    tickets.forEach((item) => loadItemHasil(item));
+  } else {
+    alert('Data error!');
+  }
 } else {
-  alert('Data error!');
+  // load no result
+  Utils.lazyLoad('../components/pencarian/NoResult.html', setNoResult);
 }
 
 // load footer
