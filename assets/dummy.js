@@ -2,7 +2,7 @@ const ticketsData = [
   {
     id: 'tix-abcd123',
     logoMaskapai: 'https://placekitten.com/24/24',
-    nameMaskapai: 'Lorem Ipsum',
+    nameMaskapai: 'Lioness Air',
     fromName: 'Jakarta',
     fromNameCode: 'JKTA',
     fromCode: 'CBA',
@@ -42,7 +42,7 @@ const ticketsData = [
   {
     id: 'tix-xyz987',
     logoMaskapai: 'https://placekitten.com/24/24',
-    nameMaskapai: 'Lorem Ipsum',
+    nameMaskapai: 'Lioness Air',
     fromName: 'Bandung',
     fromNameCode: 'BDG',
     fromCode: 'BAC',
@@ -82,7 +82,7 @@ const ticketsData = [
   {
     id: 'tix-xyz987',
     logoMaskapai: 'https://placekitten.com/24/24',
-    nameMaskapai: 'Lorem Ipsum',
+    nameMaskapai: 'Lioness Air',
     fromName: 'Jakarta',
     fromNameCode: 'JKTA',
     fromCode: 'ABC',
